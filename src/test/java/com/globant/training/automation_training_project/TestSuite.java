@@ -15,8 +15,7 @@ import org.testng.annotations.Test;
 public class TestSuite
 {
 	@DataProvider(name = "numbersToMultiply")
-	public Object[][] numbersToBeMultiplied()
-	{
+	public Object[][] numbersToBeMultiplied(){
 		return new Object [][]{
 			{new Integer(5), new Integer(6)},
 			{new Integer(9),new Integer(15)},
@@ -25,8 +24,7 @@ public class TestSuite
 	}
 	
 	@DataProvider(name = "stringValues")
-	public Object[][] stringValues ()
-	{
+	public Object[][] stringValues (){
 		return new Object [][]{
 			{"Hola", "Mundo", "Feliz"},
 			{"Automation","Training","Test"},
@@ -35,8 +33,7 @@ public class TestSuite
 	}
 		
 	@Test(dataProvider = "numbersToMultiply", groups = { "Smoke", "Regression" }, priority = 1)
-	public void multiplyNumbers(Integer n1, Integer n2)
-	{
+	public void multiplyNumbers(Integer n1, Integer n2){
 		System.out.println (n1 + " x " + n2 + " = " + n1*n2);
 	}
 	
@@ -48,15 +45,13 @@ public class TestSuite
 	
 	@Parameters({"date"})
 	@Test(groups = {"Smoke"}, priority = 3)
-	public void printDate(String date)
-	{
+	public void printDate(String date){
 		System.out.println ("Date: " + date);
 	}
 	
 	@Parameters({"ambiente"})
 	@Test(groups = {"Smoke"}, priority = 4)
-	public void ambiente(String ambiente)
-	{
+	public void ambiente(String ambiente){
 		int n1 = 123, n2 = 987;
 		
 		if(ambiente.equals("AMBIENTE1")) {
@@ -76,50 +71,42 @@ public class TestSuite
 	}	
 	
 	@BeforeSuite(alwaysRun = true)
-	public void beforeSuite ()
-	{
+	public void beforeSuite (){
 		System.out.println ("Before Suite");
 	}
 	
 	@BeforeGroups(alwaysRun = true)
-	public void beforeGroups ()
-	{
+	public void beforeGroups (){
 		System.out.println ("Before Groups");
 	}
 	
 	@BeforeClass(alwaysRun = true)
-	public void beforeClass ()
-	{
+	public void beforeClass (){
 		System.out.println ("Before Class");
 	}
 	
 	@BeforeMethod(alwaysRun = true)
-	public void beforeMethod ()
-	{
+	public void beforeMethod (){
 		System.out.println ("Before Method");
 	}
 	
 	@AfterMethod(alwaysRun = true)
-	public void afterMethod ()
-	{
+	public void afterMethod (){
 		System.out.println ("After Method");
 	}
 	
 	@AfterClass(alwaysRun = true)
-	public void afterClass ()
-	{
+	public void afterClass (){
 		System.out.println ("After Class");
 	}
 	
 	@AfterSuite(alwaysRun = true)
-	public void afterSuite ()
-	{
+	public void afterSuite (){
 		System.out.println ("After Suite");
 	}	
 	
 	@AfterGroups(alwaysRun = true)
-	public void afterGroups ()
-	{
+	public void afterGroups (){
 		System.out.println ("After Groups");
 	}
 }
