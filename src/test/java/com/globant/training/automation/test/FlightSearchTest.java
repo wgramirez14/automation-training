@@ -3,8 +3,10 @@ package com.globant.training.automation.test;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Hashtable;
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -12,6 +14,7 @@ import org.testng.annotations.Test;
 import com.globant.training.automation.pages.FlightCheckoutPage;
 import com.globant.training.automation.pages.FlightInformationPage;
 import com.globant.training.automation.pages.FlightSearchResultPage;
+import com.globant.training.automation.pages.HotelInformationPage;
 import com.globant.training.automation.pages.HotelSearchResultPage;
 import com.globant.training.automation.pages.TravelocityHomePage;
 
@@ -65,13 +68,32 @@ public class FlightSearchTest extends BaseTest {
 		Assert.assertNotNull(hotelSearchResultPage.getChangeSearchWizardLink());				
 		Assert.assertTrue(isHotelLinkListSorted(hotelSearchResultPage.sortByPrice()));		
 		
-		hotelSearchResultPage.selectFirstHotelAtLeast3Stars ();
+		HotelInformationPage hotelInformationPage  = hotelSearchResultPage.selectFirstHotelAtLeast3Stars ();
+		Assert.assertTrue(isInformationMatched(hotelSearchResultPage.getHotelDetails(), hotelInformationPage));
 		
 		try {
 			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private boolean isInformationMatched(Hashtable<String, String> hotelDetails, HotelInformationPage hotelInformationPage) {
+		
+		String hotelNameToCompare = hotelInformationPage.getHotelName().getText().trim();
+		String hotelPriceToCompare = hotelInformationPage.getHotelPrice().getText().trim();
+		
+		if(!hotelDetails.get("hotelName").equals(hotelNameToCompare)) {
+			
+			return false;
+		}
+		
+		else if (!hotelDetails.get("hotelPrice").equals(hotelPriceToCompare)) {
+			
+			return false;
+		}
+		
+		return true;
 	}
 
 	private boolean isHotelLinkListSorted(List<WebElement> hotelLinkList) {
@@ -84,11 +106,11 @@ public class FlightSearchTest extends BaseTest {
 			
 			if(link.contains("exp_dp=")) {
 				
-				System.out.println(hotelLinkList.get(i).getAttribute("href"));
+				//System.out.println(hotelLinkList.get(i).getAttribute("href"));
 				link = link.substring(link.indexOf("exp_dp=") + 7);
 				link = link.substring(0, link.indexOf("&"));
 				prices.add(Double.parseDouble(link));
-				System.out.println(link);
+				//System.out.println(link);
 			}			
 		}
 		

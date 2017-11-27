@@ -1,5 +1,6 @@
 package com.globant.training.automation.pages;
 
+import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +46,14 @@ public class HotelSearchResultPage extends BasePage {
 	private WebElement star5CheckBox;
 	
 	@FindBy(className = "starRating")
-	private List<WebElement> starRatingList;	
+	private List<WebElement> starRatingList;
+	
+	@FindBy(tagName = "article")
+	private List<WebElement> articleList;
+	
+	private String hotelName;
+	
+	private Hashtable<String,String> hotelDetails = new Hashtable<String,String>();  
 	
 	
 		
@@ -99,8 +107,19 @@ public class HotelSearchResultPage extends BasePage {
 	
 	public List<WebElement> getStarRatingList() {
 		return starRatingList;
+	}	
+
+	public List<WebElement> getArticleList() {
+		return articleList;
+	}	
+
+	public String getHotelName() {
+		return hotelName;
+	}	
+
+	public Hashtable<String, String> getHotelDetails() {
+		return hotelDetails;
 	}
-	
 
 	public List<WebElement> sortByPrice() {
 		
@@ -110,11 +129,12 @@ public class HotelSearchResultPage extends BasePage {
 		
 		
 		getWait().until(ExpectedConditions.visibilityOf(hotelLinks));
+		getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("flex-listing")));
 		
 		return hotelLinks.findElements(By.tagName("a"));		
 	}
 
-	public void selectFirstHotelAtLeast3Stars() {
+	public HotelInformationPage selectFirstHotelAtLeast3Stars() {
 		
 		for (int i = 0; i<starRatingList.size(); i++)
 		{			
@@ -123,9 +143,26 @@ public class HotelSearchResultPage extends BasePage {
 			
 			if(Double.parseDouble(starRating) >= 3)
 			{
-				starRatingList.get(i).click();
+				WebElement article = articleList.get(i);
+				
+				hotelDetails.put("hotelName", article.findElement(By.tagName("h4")).getText().trim());
+				hotelDetails.put("hotelPrice", article.findElement(By.className("actualPrice")).getText().trim());
+				//hotelName = article.findElement(By.tagName("h4")).getText().trim();
+				/*System.out.println(articleList.get(i).findElement(By.tagName("h4")).getText());
+				System.out.println(articleList.get(i).findElement(By.className("hotelTitle")).getText());*/
+				article.click();
+				//starRatingList.get(i).click();
+				//articleList.get(i).click();
 				break;
-			}
+			}			
 		}
+		
+		for (String winHandle : getDriver().getWindowHandles()) {
+			getDriver().switchTo().window(winHandle);
+		}
+		
+		getWait().withTimeout(60, TimeUnit.SECONDS).until(ExpectedConditions.presenceOfElementLocated(By.className("section-header-main")));
+		
+		return new HotelInformationPage(getDriver());
 	}	
 }
