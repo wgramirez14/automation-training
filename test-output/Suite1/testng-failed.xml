@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite1]">
+  <parameter name="date" value="2017/10/10"/>
+  <parameter name="ambiente" value="AMBIENTE2"/>
+  <test name="TestSuite(failed)">
+    <groups>
+      <run>
+        <include name="Smoke"/>
+        <include name="Regression"/>
+      </run>
+    </groups>
+    <classes>
+      <class name="com.globant.training.automation_training_project.TestSuite">
+        <methods>
+          <include name="beforeMethod"/>
+          <include name="beforeClass"/>
+          <include name="printDate" invocation-numbers="0"/>
+          <include name="afterSuite"/>
+          <include name="afterMethod"/>
+          <include name="afterClass"/>
+          <include name="beforeSuite"/>
+        </methods>
+      </class> <!-- com.globant.training.automation_training_project.TestSuite -->
+    </classes>
+  </test> <!-- TestSuite(failed) -->
+</suite> <!-- Failed suite [Suite1] -->

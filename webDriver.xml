@@ -1,0 +1,11 @@
+<suite name="Suite2" verbose="1">
+	<parameter name="ambiente" value="AMBIENTE2"/>
+	<parameter name="date" value="2017-10-10"/>
+	<parameter name="browser"  value="chrome"/>
+	
+	<test name="TestSuite">
+		<classes>
+			<class name="com.globant.training.automation.test.FlightSearchTest"/>
+		</classes>
+	</test>
+</suite> 

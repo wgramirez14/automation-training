@@ -147,12 +147,9 @@ public class HotelSearchResultPage extends BasePage {
 				
 				hotelDetails.put("hotelName", article.findElement(By.tagName("h4")).getText().trim());
 				hotelDetails.put("hotelPrice", article.findElement(By.className("actualPrice")).getText().trim());
-				//hotelName = article.findElement(By.tagName("h4")).getText().trim();
-				/*System.out.println(articleList.get(i).findElement(By.tagName("h4")).getText());
-				System.out.println(articleList.get(i).findElement(By.className("hotelTitle")).getText());*/
+				hotelDetails.put("starRating", article.findElement(By.className("star-rating")).getText().trim());
+				
 				article.click();
-				//starRatingList.get(i).click();
-				//articleList.get(i).click();
 				break;
 			}			
 		}

@@ -6,16 +6,19 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import com.globant.training.automation.pages.BookingDetailsPage;
 import com.globant.training.automation.pages.FlightCheckoutPage;
 import com.globant.training.automation.pages.FlightInformationPage;
+import com.globant.training.automation.pages.FlightSearchDeparturePage;
 import com.globant.training.automation.pages.FlightSearchResultPage;
+import com.globant.training.automation.pages.FlightSearchReturnPage;
 import com.globant.training.automation.pages.HotelInformationPage;
 import com.globant.training.automation.pages.HotelSearchResultPage;
+import com.globant.training.automation.pages.PackageCheckoutPage;
 import com.globant.training.automation.pages.TravelocityHomePage;
 
 public class FlightSearchTest extends BaseTest {
@@ -71,8 +74,23 @@ public class FlightSearchTest extends BaseTest {
 		HotelInformationPage hotelInformationPage  = hotelSearchResultPage.selectFirstHotelAtLeast3Stars ();
 		Assert.assertTrue(isInformationMatched(hotelSearchResultPage.getHotelDetails(), hotelInformationPage));
 		
+		FlightSearchDeparturePage flightSearchDeparturePage = hotelInformationPage.selectRoomFlightOption();			
+		FlightSearchReturnPage flightSearchReturnPage = flightSearchDeparturePage.selectFlightOption();
+		BookingDetailsPage bookingDetailsPage = flightSearchReturnPage.selectFlightOption();
+		
+		bookingDetailsPage.addCar();
+		Assert.assertNull(bookingDetailsPage.getAddTransportationInfo());
+		Assert.assertEquals(bookingDetailsPage.getTripFlightTo(), "Las Vegas (LAS)");
+		Assert.assertEquals(bookingDetailsPage.getTripFlightFrom(), "Los Angeles (LAX)");
+		Assert.assertNotNull(bookingDetailsPage.getTripFlightStartDate());
+		Assert.assertNotNull(bookingDetailsPage.getTripFlightEndDate());
+		Assert.assertNotNull(bookingDetailsPage.getDepartureDates());
+		
+		PackageCheckoutPage packageCheckoutPage = bookingDetailsPage.continueBooking();
+		
+		
 		try {
-			Thread.sleep(5000);
+			Thread.sleep(10000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -82,6 +100,7 @@ public class FlightSearchTest extends BaseTest {
 		
 		String hotelNameToCompare = hotelInformationPage.getHotelName().getText().trim();
 		String hotelPriceToCompare = hotelInformationPage.getHotelPrice().getText().trim();
+		String starRatingToCompare = hotelInformationPage.getStarRating().getText().trim();
 		
 		if(!hotelDetails.get("hotelName").equals(hotelNameToCompare)) {
 			
@@ -89,6 +108,11 @@ public class FlightSearchTest extends BaseTest {
 		}
 		
 		else if (!hotelDetails.get("hotelPrice").equals(hotelPriceToCompare)) {
+			
+			return false;
+		}
+		
+		else if (!hotelDetails.get("starRating").equals(starRatingToCompare)) {
 			
 			return false;
 		}
@@ -106,11 +130,9 @@ public class FlightSearchTest extends BaseTest {
 			
 			if(link.contains("exp_dp=")) {
 				
-				//System.out.println(hotelLinkList.get(i).getAttribute("href"));
 				link = link.substring(link.indexOf("exp_dp=") + 7);
 				link = link.substring(0, link.indexOf("&"));
 				prices.add(Double.parseDouble(link));
-				//System.out.println(link);
 			}			
 		}
 		

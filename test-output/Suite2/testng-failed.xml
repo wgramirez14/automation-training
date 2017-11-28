@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite2]">
+  <parameter name="date" value="2017-10-10"/>
+  <parameter name="ambiente" value="AMBIENTE2"/>
+  <parameter name="browser" value="chrome"/>
+  <test name="TestSuite(failed)">
+    <classes>
+      <class name="com.globant.training.automation.test.FlightSearchTest">
+        <methods>
+          <include name="testFlightSearchWithHotel"/>
+          <include name="afterSuite"/>
+          <include name="beforeSuite"/>
+        </methods>
+      </class> <!-- com.globant.training.automation.test.FlightSearchTest -->
+    </classes>
+  </test> <!-- TestSuite(failed) -->
+</suite> <!-- Failed suite [Suite2] -->
