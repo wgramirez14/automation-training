@@ -33,13 +33,21 @@ public class FlightSearchDeparturePage extends BasePage {
 
 	public FlightSearchReturnPage selectFlightOption() {
 		
-		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(flightListingContainer)));
-		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(flightDepartureCards)));
-		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("price-button-wrapper"))));
+		//getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(flightListingContainer)));
+		//getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(flightDepartureCards)));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("flight-listing-container"))));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("flightModuleList"))));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("button"))));
 		
 		List<WebElement> selectButtonList = flightDepartureCards.findElements(By.tagName("button"));
+		
+		for(int i = 0; i<selectButtonList.size(); i++) {
+			
+			getWait().until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(selectButtonList.get(i))));
+		}
+		
 		WebElement selectButton = selectButtonList.get(0);
-		getWait().until(ExpectedConditions.elementToBeClickable(selectButton));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(selectButton)));
 		selectButton.click();
 		
 		return new FlightSearchReturnPage(getDriver());

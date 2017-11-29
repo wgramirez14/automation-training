@@ -79,6 +79,8 @@ public class BookingDetailsPage extends BasePage {
 		
 		getWait().until(ExpectedConditions.elementToBeClickable(addCarButton));
 		addCarButton.click();
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(tripFlightTo)));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(tripFlightFrom)));
 	}
 
 

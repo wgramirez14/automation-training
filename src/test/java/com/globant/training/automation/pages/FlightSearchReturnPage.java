@@ -32,11 +32,19 @@ public class FlightSearchReturnPage extends BasePage {
 
 	public BookingDetailsPage selectFlightOption() {
 		
-		getWait().until(ExpectedConditions.visibilityOf(flightListingContainer));
-		getWait().until(ExpectedConditions.visibilityOf(flightReturnCards));
-		getWait().withTimeout(20, TimeUnit.SECONDS).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("button")));
+		/*getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(flightListingContainer)));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.visibilityOf(flightReturnCards)));*/
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("flight-listing-container"))));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.id("flightModuleList"))));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("button"))));
 		
 		List<WebElement> selectButtonList = flightReturnCards.findElements(By.tagName("button"));		
+		
+		for(int i = 0; i<selectButtonList.size(); i++) {
+			
+			getWait().until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(selectButtonList.get(i))));
+		}
+		
 		WebElement selectButton = selectButtonList.get(2);
 		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(selectButton)));
 		selectButton.click();
