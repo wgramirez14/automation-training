@@ -1,6 +1,7 @@
 package com.globant.training.automation.pages;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -33,11 +34,11 @@ public class FlightSearchReturnPage extends BasePage {
 		
 		getWait().until(ExpectedConditions.visibilityOf(flightListingContainer));
 		getWait().until(ExpectedConditions.visibilityOf(flightReturnCards));
-		getWait().until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.tagName("button")));
+		getWait().withTimeout(20, TimeUnit.SECONDS).until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("button")));
 		
 		List<WebElement> selectButtonList = flightReturnCards.findElements(By.tagName("button"));		
 		WebElement selectButton = selectButtonList.get(2);
-		getWait().until(ExpectedConditions.elementToBeClickable(selectButton));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.elementToBeClickable(selectButton)));
 		selectButton.click();
 		
 		return new BookingDetailsPage(getDriver());

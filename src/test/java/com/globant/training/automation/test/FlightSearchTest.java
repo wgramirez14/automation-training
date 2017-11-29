@@ -79,7 +79,7 @@ public class FlightSearchTest extends BaseTest {
 		BookingDetailsPage bookingDetailsPage = flightSearchReturnPage.selectFlightOption();
 		
 		bookingDetailsPage.addCar();
-		Assert.assertNull(bookingDetailsPage.getAddTransportationInfo());
+		//Assert.assertNull(bookingDetailsPage.getAddTransportationInfo());
 		Assert.assertEquals(bookingDetailsPage.getTripFlightTo(), "Las Vegas (LAS)");
 		Assert.assertEquals(bookingDetailsPage.getTripFlightFrom(), "Los Angeles (LAX)");
 		Assert.assertNotNull(bookingDetailsPage.getTripFlightStartDate());
@@ -120,9 +120,9 @@ public class FlightSearchTest extends BaseTest {
 		return true;
 	}
 
-	private boolean isHotelLinkListSorted(List<WebElement> hotelLinkList) {
+	private boolean isHotelLinkListSorted(List<Double> prices) {
 		
-		List<Double> prices = new ArrayList<Double> ();
+		/*List<Double> prices = new ArrayList<Double> ();
 		
 		for(int i = 0; i<hotelLinkList.size(); i++) 
 		{
@@ -134,10 +134,12 @@ public class FlightSearchTest extends BaseTest {
 				link = link.substring(0, link.indexOf("&"));
 				prices.add(Double.parseDouble(link));
 			}			
-		}
-		
+		}*/
+		System.out.println("Tamano arreglo precios" + prices.size());
 		for (int i = 0; i<prices.size()-1; i++)
 		{
+			System.out.println("prices.get("+i+") = " + prices.get(i));
+			System.out.println("prices.get("+(i+1)+") = " + prices.get(i+1));
 			if(prices.get(i) > prices.get(i+1)) 
 			{
 				return false;
@@ -193,4 +195,19 @@ public class FlightSearchTest extends BaseTest {
 		
 		return true;
 	}
+	
+	/*public boolean retryingFindClick(By by) {
+        boolean result = false;
+        int attempts = 0;
+        while(attempts < 2) {
+            try {
+                driver.findElement(by).click();
+                result = true;
+                break;
+            } catch(StaleElementException e) {
+            }
+            attempts++;
+        }
+        return result;
+	}*/
 }

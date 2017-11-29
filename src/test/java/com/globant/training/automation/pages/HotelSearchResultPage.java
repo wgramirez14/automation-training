@@ -1,10 +1,12 @@
 package com.globant.training.automation.pages;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -121,7 +123,7 @@ public class HotelSearchResultPage extends BasePage {
 		return hotelDetails;
 	}
 
-	public List<WebElement> sortByPrice() {
+	public List<Double> sortByPrice() {
 		
 		getWait().until(ExpectedConditions.elementToBeClickable(priceSortButton)).click();
 		
@@ -130,8 +132,26 @@ public class HotelSearchResultPage extends BasePage {
 		
 		getWait().until(ExpectedConditions.visibilityOf(hotelLinks));
 		getWait().until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("flex-listing")));
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("flex-listing"))));
 		
-		return hotelLinks.findElements(By.tagName("a"));		
+		List<WebElement> hotelLinkList = hotelLinks.findElements(By.tagName("a"));
+		List<Double> prices = new ArrayList<Double> ();
+		
+		for(int i = 0; i<hotelLinkList.size(); i++) 
+		{
+			String link = retryingFindElement(hotelLinkList.get(i));
+			
+			if(link.contains("exp_dp=")) {
+				
+				link = link.substring(link.indexOf("exp_dp=") + 7);
+				link = link.substring(0, link.indexOf("&"));
+				prices.add(Double.parseDouble(link));
+			}			
+		}
+		
+		getWait().until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfAllElementsLocatedBy(By.tagName("a"))));
+		
+		return prices;		
 	}
 
 	public HotelInformationPage selectFirstHotelAtLeast3Stars() {
@@ -162,4 +182,21 @@ public class HotelSearchResultPage extends BasePage {
 		
 		return new HotelInformationPage(getDriver());
 	}	
+	
+	private String retryingFindElement(WebElement hotelLink) {
+       
+		String link="";
+		boolean result = false;
+        int attempts = 0;
+        while(attempts < 10) {
+            try {
+            	link = hotelLink.getAttribute("href");
+                result = true;
+                break;
+            } catch(StaleElementReferenceException e) {
+            }
+            attempts++;
+        }
+        return link;
+	}
 }

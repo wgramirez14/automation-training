@@ -1,5 +1,8 @@
 package com.globant.training.automation.pages;
 
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -75,7 +78,7 @@ public class BookingDetailsPage extends BasePage {
 	public void addCar() {
 		
 		getWait().until(ExpectedConditions.elementToBeClickable(addCarButton));
-		addCarButton.click();		
+		addCarButton.click();
 	}
 
 

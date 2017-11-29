@@ -27,7 +27,7 @@ public class MyDriver {
 			break;
 		case "chrome":
 			System.setProperty("webdriver.chrome.driver",
-					"C:\\eclipse-jee-oxygen-R-win32-x86_64\\automationResources\\drivers\\chromedriver.exe");
+					"C:\\eclipse-java-oxygen-1a-win32-x86_64\\eclipse\\automationResources\\chromedriver.exe");
 			ChromeOptions options = new ChromeOptions();
 			options.addArguments("disable-infobars");
 			options.addArguments("test-type");

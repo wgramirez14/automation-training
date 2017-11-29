@@ -236,7 +236,7 @@ public class TravelocityHomePage extends BasePage {
 		getWait().until(ExpectedConditions.elementToBeClickable(packageSearchButton));
 		packageSearchButton.click();
 		
-		getWait().withTimeout(60, TimeUnit.SECONDS).until(ExpectedConditions.presenceOfElementLocated(By.className("section-header-main")));
+		getWait().withTimeout(60, TimeUnit.SECONDS).until(ExpectedConditions.refreshed(ExpectedConditions.presenceOfElementLocated(By.className("section-header-main"))));
 
 		return new HotelSearchResultPage(getDriver());
 	}
