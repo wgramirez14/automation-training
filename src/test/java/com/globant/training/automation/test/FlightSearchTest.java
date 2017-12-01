@@ -80,6 +80,7 @@ public class FlightSearchTest extends BaseTest {
 		
 		bookingDetailsPage.addCar();
 		//Assert.assertNull(bookingDetailsPage.getAddTransportationInfo());
+		System.out.println(bookingDetailsPage.getTripFlightTo().getText());
 		Assert.assertEquals(bookingDetailsPage.getTripFlightTo(), "Las Vegas (LAS)");
 		Assert.assertEquals(bookingDetailsPage.getTripFlightFrom(), "Los Angeles (LAX)");
 		Assert.assertNotNull(bookingDetailsPage.getTripFlightStartDate());
