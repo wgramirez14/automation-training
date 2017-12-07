@@ -1,4 +1,7 @@
-package com.globant.training.automation_training_project;
+package com.globant.training.automationTrainingProject;
+
+import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterGroups;
@@ -17,9 +20,9 @@ public class TestSuite
 	@DataProvider(name = "numbersToMultiply")
 	public Object[][] numbersToBeMultiplied(){
 		return new Object [][]{
-			{new Integer(5), new Integer(6)},
-			{new Integer(9),new Integer(15)},
-			{new Integer(150),new Integer(875)}
+			{ThreadLocalRandom.current().nextInt(1, 1000 + 1), ThreadLocalRandom.current().nextInt(1, 1000 + 1)},
+			{ThreadLocalRandom.current().nextInt(1, 1000 + 1), ThreadLocalRandom.current().nextInt(1, 1000 + 1)},
+			{ThreadLocalRandom.current().nextInt(1, 1000 + 1), ThreadLocalRandom.current().nextInt(1, 1000 + 1)}
 		};
 	}
 	
@@ -34,25 +37,26 @@ public class TestSuite
 		
 	@Test(dataProvider = "numbersToMultiply", groups = { "Smoke", "Regression" }, priority = 1)
 	public void multiplyNumbers(Integer n1, Integer n2){
-		System.out.println (n1 + " x " + n2 + " = " + n1*n2);
+		System.out.println ("Test de Multiplicacion: " + n1 + " x " + n2 + " = " + n1*n2);
 	}
 	
 	@Test(dataProvider = "stringValues", groups = { "Smoke", "Regression" }, priority = 2)
-	public void concatenateStrings(String s1, String s2, String s3)
-	{
+	public void concatenateStrings(String s1, String s2, String s3){
 		System.out.println (s1 + " " + s2 + " " + s3);
 	}
 	
 	@Parameters({"date"})
 	@Test(groups = {"Smoke"}, priority = 3)
 	public void printDate(String date){
-		System.out.println ("Date: " + date);
+		
+		LocalDate localDate = LocalDate.parse(date);
+		System.out.println ("Date: " + localDate);
 	}
 	
 	@Parameters({"ambiente"})
 	@Test(groups = {"Smoke"}, priority = 4)
 	public void ambiente(String ambiente){
-		int n1 = 123, n2 = 987;
+		int n1 = ThreadLocalRandom.current().nextInt(1, 1000 + 1), n2 = ThreadLocalRandom.current().nextInt(1, 1000 + 1);
 		
 		if(ambiente.equals("AMBIENTE1")) {
 			

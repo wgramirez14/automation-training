@@ -1,6 +1,7 @@
 <suite name="Suite1" verbose="1">
 	<parameter name="ambiente" value="AMBIENTE2"/>
-	<parameter name="date" value="2017/10/10"/>
+	<parameter name="date" value="2017-10-10"/>
+	<parameter name="browser"  value="firefox"/>
 	
 	<groups>
 		<run>
@@ -11,7 +12,7 @@
 	
 	<test name="TestSuite">
 		<classes>
-			<class name="com.globant.training.automation_training_project.TestSuite"/>
+			<class name="com.globant.training.automationTrainingProject.TestSuite"/>
 		</classes>
 	</test>
 </suite> 
